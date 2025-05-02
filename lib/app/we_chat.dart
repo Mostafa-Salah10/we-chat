@@ -1,3 +1,6 @@
+import 'package:chat_app/core/routes/app_router.dart';
+import 'package:chat_app/core/routes/app_routes.dart';
+import 'package:chat_app/core/utils/size_config.dart';
 import 'package:flutter/material.dart';
 
 class WeChat extends StatelessWidget {
@@ -5,9 +8,11 @@ class WeChat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(body: Center(child: Text('WeChat'))),
+      initialRoute: AppRoutes.splashScreen,
+      onGenerateRoute: AppRouter.onGenerateRoute,
     );
   }
 }

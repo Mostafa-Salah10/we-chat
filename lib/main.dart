@@ -1,6 +1,9 @@
 import 'package:chat_app/app/we_chat.dart';
+import 'package:chat_app/core/functions/init_serveces_app.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Future.wait([initServecesApp()]);
   runApp(WeChat());
 }
