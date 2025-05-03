@@ -28,10 +28,10 @@ flutter:
   assets:
     - assets/images/
 
-  fonts:
-    - family: Inter
-      fonts:
-        - assets/fonts/Inter_18pt-Regular.ttf
+  # fonts:
+  #   - family: Inter
+  #     fonts:
+  #       - assets/fonts/Inter_18pt-Regular.ttf
 
 
 flutter_assets:

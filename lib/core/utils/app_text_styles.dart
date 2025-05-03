@@ -1,3 +1,5 @@
+import 'package:chat_app/core/utils/app_colors.dart';
+import 'package:chat_app/core/utils/size_config.dart';
 import 'package:flutter/material.dart';
 
 abstract class AppTextStyles {
@@ -16,4 +18,10 @@ abstract class AppTextStyles {
       letterSpacing: letterSpacing,
     );
   }
+
+  static TextStyle get tileStyle => _textStyle(
+    fontSize: SizeConfig.textSize * 3,
+    fontWeight: FontWeight.bold,
+    color: AppColors.black,
+  );
 }
