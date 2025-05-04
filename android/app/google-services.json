@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1044586751111",
+    "project_id": "we-chat-a0044",
+    "storage_bucket": "we-chat-a0044.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044586751111:android:04357ff53582ade03b8422",
+        "android_client_info": {
+          "package_name": "com.android.application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRZVCOtOj0TsK3-V18xgElCHNVhawW3PM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044586751111:android:ccd7c6d230c1a5943b8422",
+        "android_client_info": {
+          "package_name": "com.example.chat_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRZVCOtOj0TsK3-V18xgElCHNVhawW3PM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -53,7 +53,7 @@ class _SplashViewState extends State<SplashView> {
 
   Future<void> _navigateToAnotherScreen() {
     return Future.delayed(
-      const Duration(seconds: 1),
+      const Duration(seconds: 3),
       () => customPushReplacement(context, route: AppRoutes.signInScreen),
     );
   }
