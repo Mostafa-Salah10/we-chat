@@ -27,13 +27,10 @@ flutter:
 
   assets:
     - assets/images/
-
   # fonts:
   #   - family: Inter
   #     fonts:
   #       - assets/fonts/Inter_18pt-Regular.ttf
-
-
 flutter_assets:
   assets_path: assets/images/
   output_path: lib/core/utils/

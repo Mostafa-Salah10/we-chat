@@ -12,6 +12,15 @@ abstract class AppTheme {
       iconTheme: const IconThemeData(color: AppColors.black),
     ),
     scaffoldBackgroundColor: AppColors.white,
-    textTheme: TextTheme(headlineMedium: AppTextStyles.tileStyle),
+    textTheme: TextTheme(
+      headlineMedium: AppTextStyles.tileStyle,
+      headlineSmall: AppTextStyles.butttonStyle,
+    ),
+
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: AppColors.green,
+      foregroundColor: AppColors.white,
+      shape: CircleBorder(),
+    ),
   );
 }

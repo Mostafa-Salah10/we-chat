@@ -1,4 +1,5 @@
 import 'package:chat_app/core/routes/app_routes.dart';
+import 'package:chat_app/features/auth/presentation/screens/signin_view.dart';
 import 'package:chat_app/features/home/presentation/screens/home_view.dart';
 import 'package:chat_app/features/splash/presentation/screens/splash_view.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,9 @@ abstract class AppRouter {
 
       case AppRoutes.homeScreen:
         return MaterialPageRoute(builder: (_) => HomeView());
+
+      case AppRoutes.signInScreen:
+        return MaterialPageRoute(builder: (_) => SignInView());
       default:
         return null;
     }

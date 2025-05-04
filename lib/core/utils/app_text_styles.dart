@@ -24,4 +24,9 @@ abstract class AppTextStyles {
     fontWeight: FontWeight.bold,
     color: AppColors.black,
   );
+  static TextStyle get butttonStyle => _textStyle(
+    color: AppColors.white,
+    fontSize: SizeConfig.textSize * 2.2,
+    fontWeight: FontWeight.w500,
+  );
 }
