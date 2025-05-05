@@ -2,7 +2,7 @@ import 'package:chat_app/core/utils/app_strings.dart';
 import 'package:chat_app/core/utils/assets.dart';
 import 'package:chat_app/core/utils/size_config.dart';
 import 'package:chat_app/core/widgets/app_spaces.dart';
-import 'package:chat_app/features/auth/presentation/widgets/custom_signin_with_google_button.dart';
+import 'package:chat_app/features/auth/presentation/widgets/handel_signin_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -24,9 +24,7 @@ class SignInView extends StatelessWidget {
           Spacer(),
           Center(child: _getLogoImage()),
           Spacer(),
-          CustomSignInWithGoogleButton(
-            onPressed: () {},
-          ).animate().fade(duration: 700.ms).moveY(duration: 700.ms, begin: 20),
+          HandelSignInButton(),
           VerticalSpace(height: 10),
         ],
       ),

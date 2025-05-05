@@ -1,4 +1,5 @@
 import 'package:chat_app/core/functions/custom_navigator.dart';
+import 'package:chat_app/core/repo/global_repo.dart';
 import 'package:chat_app/core/routes/app_routes.dart';
 import 'package:chat_app/core/utils/app_strings.dart';
 import 'package:chat_app/core/utils/assets.dart';
@@ -54,7 +55,13 @@ class _SplashViewState extends State<SplashView> {
   Future<void> _navigateToAnotherScreen() {
     return Future.delayed(
       const Duration(seconds: 3),
-      () => customPushReplacement(context, route: AppRoutes.signInScreen),
+      () => customPushReplacement(context, route: _checkCurrentRoute()),
     );
+  }
+
+  String _checkCurrentRoute() {
+    return GlobalRepo.checkCurrentUser()
+        ? AppRoutes.homeScreen
+        : AppRoutes.signInScreen;
   }
 }

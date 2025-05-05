@@ -13,7 +13,6 @@ class CustomSignInWithGoogleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       onPressed: onPressed,
-
       style: _getButtonStyle(),
       label: Text(
         AppStrings.signInWithGoogle,
