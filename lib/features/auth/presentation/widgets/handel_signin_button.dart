@@ -31,9 +31,7 @@ class HandelSignInButton extends StatelessWidget {
       if (value.requestStatus == RequestStatus.loading) {
         CustomDialogs.showCircleProgressIndicatorDialog(context: context);
       } else {
-        if (Navigator.canPop(context)) {
-          Navigator.pop(context);
-        }
+        _dismissDialog(context);
         if (value.requestStatus == RequestStatus.failure) {
           CustomDialogs.showSnackBar(
             context: context,
@@ -45,5 +43,11 @@ class HandelSignInButton extends StatelessWidget {
         }
       }
     });
+  }
+
+  void _dismissDialog(BuildContext context) {
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+    }
   }
 }
