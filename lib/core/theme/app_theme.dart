@@ -15,8 +15,11 @@ abstract class AppTheme {
     textTheme: TextTheme(
       headlineMedium: AppTextStyles.tileStyle,
       headlineSmall: AppTextStyles.butttonStyle,
+      bodyMedium: AppTextStyles.cardStyle,
+      bodySmall: AppTextStyles.subTitle,
     ),
 
+    iconTheme: const IconThemeData(color: AppColors.white),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: AppColors.green,
       foregroundColor: AppColors.white,

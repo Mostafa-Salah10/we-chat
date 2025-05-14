@@ -15,4 +15,5 @@ void main() async {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]),
   ]);
   runApp(MultiProvider(providers: getProviders, child: WeChat()));
+  
 }

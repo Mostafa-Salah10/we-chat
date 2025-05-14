@@ -29,4 +29,14 @@ abstract class AppTextStyles {
     fontSize: SizeConfig.textSize * 2.2,
     fontWeight: FontWeight.w500,
   );
+  static TextStyle get cardStyle => _textStyle(
+    color: AppColors.black,
+    fontSize: SizeConfig.textSize * 2.4,
+    fontWeight: FontWeight.w500,
+  );
+  static TextStyle get subTitle => _textStyle(
+    color: AppColors.blackShade54,
+    fontSize: SizeConfig.textSize * 1.8,
+    fontWeight: FontWeight.w500,
+  );
 }
