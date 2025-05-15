@@ -4,4 +4,6 @@ abstract class AppStrings {
   static const String signInWithGoogle = 'Sign In With Google';
   static const String successfully = 'Successfully Signed In';
   static const String internetConnection = 'No internet connection';
+  static const String userConnec = 'No Connections Founded';
+  static const String defAbout = 'Hey , I Use We Chat';
 }

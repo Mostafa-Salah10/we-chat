@@ -8,4 +8,5 @@ abstract class FireBaseConstants {
   static const String lastActive = 'last_active';
   static const String pushToken = 'push_token';
   static const String email = 'email';
+  static const String users = 'users';
 }
