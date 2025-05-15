@@ -25,5 +25,20 @@ abstract class AppTheme {
       foregroundColor: AppColors.white,
       shape: CircleBorder(),
     ),
+
+    inputDecorationTheme: InputDecorationTheme(
+      labelStyle: TextStyle(color: AppColors.lightGrey, fontSize: 16),
+      errorBorder: getOutlineTextFieldBorder(color: AppColors.red),
+      focusedBorder: getOutlineTextFieldBorder(color: AppColors.lightGrey),
+      enabledBorder: getOutlineTextFieldBorder(color: AppColors.lightGrey),
+      focusedErrorBorder: getOutlineTextFieldBorder(color: AppColors.red),
+    ),
   );
+
+  static OutlineInputBorder getOutlineTextFieldBorder({required Color color}) {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: BorderSide(color: color, width: 0.6),
+    );
+  }
 }
