@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:chat_app/core/constants/firebase_cons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:image_picker/image_picker.dart';
 
 abstract class GlobalRepo {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -19,5 +22,17 @@ abstract class GlobalRepo {
             .doc(_auth.currentUser!.uid)
             .get())
         .exists;
+  }
+
+  //Teke Photo From Mobile
+  static  Future<File?> getImageFromMobile({required bool fromGallary}) async {
+    ImagePicker imagePicke = ImagePicker();
+    if (fromGallary) {
+      XFile? xFile = await imagePicke.pickImage(source: ImageSource.gallery);
+      return xFile == null ? null : File(xFile.path);
+    } else {
+      XFile? xFile = await imagePicke.pickImage(source: ImageSource.camera);
+      return xFile == null ? null : File(xFile.path);
+    }
   }
 }

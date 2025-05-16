@@ -1,18 +1,26 @@
+import 'dart:io';
+
+import 'package:chat_app/core/repo/global_repo.dart';
 import 'package:chat_app/core/utils/app_colors.dart';
 import 'package:chat_app/core/utils/app_strings.dart';
 import 'package:chat_app/core/utils/assets.dart';
 import 'package:chat_app/core/utils/size_config.dart';
 import 'package:chat_app/core/widgets/app_spaces.dart';
+import 'package:chat_app/features/profile/presentation/manager/profile_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CustomChooseImgeWidget extends StatelessWidget {
-  const CustomChooseImgeWidget({super.key});
+  const CustomChooseImgeWidget({super.key, required this.id});
+
+  final String id;
 
   @override
   Widget build(BuildContext context) {
+    final profile = context.read<ProfileService>();
     return Container(
       width: double.infinity,
-      height: SizeConfig.blockHeight * 28,
+      height: SizeConfig.blockHeight * 26,
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.only(
@@ -29,19 +37,35 @@ class CustomChooseImgeWidget extends StatelessWidget {
             style: TextStyle(color: AppColors.black, fontSize: 20),
           ),
           VerticalSpace(height: 3),
-          _getImageRow(),
+          _getImageRow(context, profile),
         ],
       ),
     );
   }
 
-  Row _getImageRow() {
+  Row _getImageRow(context, ProfileService profile) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _getImageSource(Assets.imagesGallery, () {}),
+        _getImageSource(Assets.imagesGallery, () async {
+          final File? file = await GlobalRepo.getImageFromMobile(
+            fromGallary: true,
+          );
+          if (file != null) {
+            await profile.updateProfileImage(imageFile: file, userId: id);
+          }
+          Navigator.pop(context);
+        }),
         HorizontilSpace(width: 10),
-        _getImageSource(Assets.imagesCircle, () {}),
+        _getImageSource(Assets.imagesCircle, () async {
+          final File? file = await GlobalRepo.getImageFromMobile(
+            fromGallary: false,
+          );
+          if (file != null) {
+            await profile.updateProfileImage(imageFile: file, userId: id);
+          }
+          Navigator.pop(context);
+        }),
       ],
     );
   }

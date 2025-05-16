@@ -31,7 +31,7 @@ class ProfileView extends StatelessWidget {
             child: Column(
               children: [
                 VerticalSpace(height: 5),
-                CustomProfileImage(image: user.image),
+                CustomProfileImage(image: user.image, id: user.id),
                 VerticalSpace(height: 3),
                 _getEmailWidget(context),
                 VerticalSpace(height: 5),

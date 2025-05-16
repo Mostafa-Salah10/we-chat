@@ -4,6 +4,7 @@ import 'package:chat_app/core/routes/app_routes.dart';
 import 'package:chat_app/core/utils/app_colors.dart';
 import 'package:chat_app/core/utils/app_strings.dart';
 import 'package:chat_app/features/home/presentation/manager/home_service.dart';
+import 'package:chat_app/features/profile/presentation/manager/profile_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -78,6 +79,8 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           PopupMenuItem(
             onTap: () {
               final home = context.read<HomeService>();
+              final profile = context.read<ProfileService>();
+              profile.loadImageFromCache(userId: home.user.id);
               customPush(
                 context,
                 route: AppRoutes.profileScreen,
