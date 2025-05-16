@@ -12,7 +12,6 @@ class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
   @override
-  @override
   Widget build(BuildContext context) {
     final homeSevice = context.read<HomeService>();
     return Scaffold(

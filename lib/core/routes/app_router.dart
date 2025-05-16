@@ -18,8 +18,8 @@ abstract class AppRouter {
       case AppRoutes.signInScreen:
         return MaterialPageRoute(builder: (_) => SignInView());
       case AppRoutes.profileScreen:
-      final UserModel user=settings.arguments as UserModel;
-        return MaterialPageRoute(builder: (_) => ProfileView(user: user,));
+        final UserModel user = settings.arguments as UserModel;
+        return MaterialPageRoute(builder: (_) => ProfileView(user: user));
       default:
         return null;
     }

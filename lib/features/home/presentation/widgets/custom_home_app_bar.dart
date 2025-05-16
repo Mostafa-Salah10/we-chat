@@ -41,14 +41,12 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             child: Center(child: Text(AppStrings.logout)),
           ),
           PopupMenuItem(
-            onTap: () async {
+            onTap: () {
               final home = context.read<HomeService>();
-              await home.getCurrentUser().then(
-                (value) => customPush(
-                  context,
-                  route: AppRoutes.profileScreen,
-                  argument: home.user,
-                ),
+              customPush(
+                context,
+                route: AppRoutes.profileScreen,
+                argument: home.user,
               );
             },
             child: Center(child: Text(AppStrings.settings)),

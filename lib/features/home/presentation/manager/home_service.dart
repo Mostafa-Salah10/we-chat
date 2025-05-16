@@ -5,12 +5,15 @@ import 'package:flutter/material.dart';
 
 class HomeService with ChangeNotifier {
   final HomeRepo homeRepo;
-  UserModel? user;
+  late UserModel user;
 
   HomeService({required this.homeRepo});
 
   ///get All Data Of Users
-  Stream<QuerySnapshot> getAllUsers() => homeRepo.getAllUsers();
+  Stream<QuerySnapshot> getAllUsers() {
+    getCurrentUser();
+    return homeRepo.getAllUsers();
+  }
 
   ///get Current User
   Future<void> getCurrentUser() async {
