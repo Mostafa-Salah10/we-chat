@@ -1,0 +1,19 @@
+import 'package:chat_app/features/home/data/models/user_model.dart';
+import 'package:chat_app/features/home/data/repo/home_repo.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+
+class HomeService with ChangeNotifier {
+  final HomeRepo homeRepo;
+  UserModel? user;
+
+  HomeService({required this.homeRepo});
+
+  ///get All Data Of Users
+  Stream<QuerySnapshot> getAllUsers() => homeRepo.getAllUsers();
+
+  ///get Current User
+  Future<void> getCurrentUser() async {
+    user = await homeRepo.getCurrentUser();
+  }
+}

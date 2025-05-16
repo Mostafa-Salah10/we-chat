@@ -3,13 +3,14 @@ import 'package:chat_app/core/repo/global_repo.dart';
 import 'package:chat_app/core/routes/app_routes.dart';
 import 'package:chat_app/core/utils/app_colors.dart';
 import 'package:chat_app/core/utils/app_strings.dart';
-import 'package:chat_app/features/home/data/models/user_model.dart';
+import 'package:chat_app/features/home/presentation/manager/home_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomHomeAppBar({super.key, required this.user});
-  final UserModel user;
+  const CustomHomeAppBar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -29,30 +30,31 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     return PopupMenuButton(
       color: AppColors.offWhite,
       offset: Offset(0, 53),
-      itemBuilder:
-          (context) => [
-            PopupMenuItem(
-              onTap: () {
-                GlobalRepo.signOut().then((value) {
-                  customPushAndRemoveAll(
-                    context,
-                    route: AppRoutes.signInScreen,
-                  );
-                });
-              },
-              child: Center(child: Text(AppStrings.logout)),
-            ),
-            PopupMenuItem(
-              onTap: () {
-                customPush(
+      itemBuilder: (context) {
+        return [
+          PopupMenuItem(
+            onTap: () {
+              GlobalRepo.signOut().then((value) {
+                customPushAndRemoveAll(context, route: AppRoutes.signInScreen);
+              });
+            },
+            child: Center(child: Text(AppStrings.logout)),
+          ),
+          PopupMenuItem(
+            onTap: () async {
+              final home = context.read<HomeService>();
+              await home.getCurrentUser().then(
+                (value) => customPush(
                   context,
                   route: AppRoutes.profileScreen,
-                  argument: user,
-                );
-              },
-              child: Center(child: Text(AppStrings.settings)),
-            ),
-          ],
+                  argument: home.user,
+                ),
+              );
+            },
+            child: Center(child: Text(AppStrings.settings)),
+          ),
+        ];
+      },
     );
   }
 

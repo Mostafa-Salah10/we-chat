@@ -9,15 +9,18 @@ class CustomProfileImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [_getProfileImage(), _getEditIcon()]);
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [_getProfileImage(), _getEditIcon()],
+    );
   }
 
   ClipRRect _getProfileImage() {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(SizeConfig.blockHeight * 10),
+      borderRadius: BorderRadius.circular(SizeConfig.blockHeight * 7.5),
       child: CustomCachedNetworkImage(
-        width: SizeConfig.blockHeight * 20,
-        height: SizeConfig.blockHeight * 20,
+        width: SizeConfig.blockHeight * 15,
+        height: SizeConfig.blockHeight * 15,
         fit: BoxFit.fill,
         imageUrl: image,
       ),
@@ -26,14 +29,13 @@ class CustomProfileImage extends StatelessWidget {
 
   Positioned _getEditIcon() {
     return Positioned(
-      bottom: 10,
-      right: 0,
-      child: CircleAvatar(
-        backgroundColor: AppColors.green,
-        child: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.edit, color: AppColors.white),
-        ),
+      bottom: -15,
+      right: -15,
+      child: MaterialButton(
+        onPressed: () {},
+        color: AppColors.green,
+        shape: CircleBorder(),
+        child: const Icon(Icons.edit, color: AppColors.white, size: 20),
       ),
     );
   }
