@@ -13,38 +13,48 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeSevice = context.read<HomeService>();
-    return Scaffold(
-      floatingActionButton: _getFloatingActionButton(),
-      appBar: CustomHomeAppBar(),
-      body: StreamBuilder(
-        stream: homeSevice.getAllUsers(),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-            case ConnectionState.waiting:
-              return Center(
-                child: CircularProgressIndicator(color: AppColors.green),
-              );
-            case ConnectionState.active:
-            case ConnectionState.done:
-              final queryDoc = snapshot.data!.docs;
-              final List<UserModel> users =
-                  queryDoc
-                      .map(
-                        (user) => UserModel.fromJson(
-                          user.data() as Map<String, dynamic>,
-                        ),
-                      )
-                      .toList();
-              return _getUsersView(users, context);
-          }
-        },
-      ),
+    return Consumer<HomeService>(
+      builder:
+          (_, value, _) => Scaffold(
+            floatingActionButton: _getFloatingActionButton(),
+            appBar: CustomHomeAppBar(),
+            body: StreamBuilder(
+              stream: value.getAllUsers(),
+              builder: (context, snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
+                  case ConnectionState.waiting:
+                    return Center(
+                      child: CircularProgressIndicator(color: AppColors.green),
+                    );
+                  case ConnectionState.active:
+                  case ConnectionState.done:
+                    final queryDoc = snapshot.data!.docs;
+                    final List<UserModel> users =
+                        queryDoc
+                            .map(
+                              (user) => UserModel.fromJson(
+                                user.data() as Map<String, dynamic>,
+                              ),
+                            )
+                            .toList();
+                    value.users.clear();
+                    value.users = List.from(users);
+                    return _getUsersView(users, value.filterList, context);
+                }
+              },
+            ),
+          ),
     );
   }
 
-  Widget _getUsersView(List<UserModel> users, BuildContext bx) {
+  Widget _getUsersView(
+    List<UserModel> users,
+    List<UserModel> filterList,
+    BuildContext bx,
+  ) {
+    final homeSevice = bx.read<HomeService>();
+
     return users.isEmpty
         ? Center(
           child: Text(
@@ -55,9 +65,14 @@ class HomeView extends StatelessWidget {
         : ListView.builder(
           padding: EdgeInsets.symmetric(vertical: SizeConfig.blockHeight * 1.8),
           physics: const BouncingScrollPhysics(),
-          itemCount: users.length,
+          itemCount: homeSevice.isSearch ? filterList.length : users.length,
           itemBuilder: (context, index) {
-            return CustomUserItem(userModel: users.elementAt(index));
+            return CustomUserItem(
+              userModel:
+                  homeSevice.isSearch
+                      ? filterList.elementAt(index)
+                      : users.elementAt(index),
+            );
           },
         );
   }

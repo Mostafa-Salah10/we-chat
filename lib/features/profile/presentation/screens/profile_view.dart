@@ -21,20 +21,23 @@ class ProfileView extends StatelessWidget {
         ),
       ),
 
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: SizeConfig.screenWidth * 0.06,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              VerticalSpace(height: 5),
-              CustomProfileImage(image: user.image),
-              VerticalSpace(height: 3),
-              _getEmailWidget(context),
-              VerticalSpace(height: 5),
-              CustomProfileForm(user: user),
-            ],
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: SizeConfig.screenWidth * 0.06,
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                VerticalSpace(height: 5),
+                CustomProfileImage(image: user.image),
+                VerticalSpace(height: 3),
+                _getEmailWidget(context),
+                VerticalSpace(height: 5),
+                CustomProfileForm(user: user),
+              ],
+            ),
           ),
         ),
       ),

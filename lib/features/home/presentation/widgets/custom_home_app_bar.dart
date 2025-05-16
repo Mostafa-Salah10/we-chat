@@ -13,16 +13,43 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final homeSevice = context.read<HomeService>();
     return AppBar(
       leading: const Icon(CupertinoIcons.home),
       actions: [
-        IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+        homeSevice.isSearch
+            ? IconButton(
+              onPressed: () {
+                homeSevice.update(false);
+              },
+              icon: const Icon(CupertinoIcons.clear_circled_solid),
+            )
+            : IconButton(
+              onPressed: () {
+                homeSevice.update(true);
+              },
+              icon: const Icon(Icons.search),
+            ),
         _getPubupMenu(),
       ],
-      title: Text(
-        AppStrings.appName,
-        style: Theme.of(context).textTheme.headlineMedium,
-      ),
+      title:
+          homeSevice.isSearch
+              ? TextField(
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  hintText: AppStrings.name,
+                ),
+                autofocus: true,
+                onChanged: (value) {
+                  homeSevice.search(value);
+                },
+              )
+              : Text(
+                AppStrings.appName,
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
     );
   }
 

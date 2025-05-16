@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 class HomeService with ChangeNotifier {
   final HomeRepo homeRepo;
   late UserModel user;
+  List<UserModel> users = [];
+  List<UserModel> filterList = [];
+  bool isSearch = false;
 
   HomeService({required this.homeRepo});
 
@@ -18,5 +21,22 @@ class HomeService with ChangeNotifier {
   ///get Current User
   Future<void> getCurrentUser() async {
     user = await homeRepo.getCurrentUser();
+  }
+
+  void update(bool value) {
+    isSearch = value;
+    notifyListeners();
+  }
+
+  void search(String query) {
+    filterList.clear();
+    filterList =
+        users
+            .where(
+              (element) =>
+                  element.name.toLowerCase().contains(query.toLowerCase()),
+            )
+            .toList();
+    notifyListeners();
   }
 }
