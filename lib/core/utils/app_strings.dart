@@ -16,4 +16,5 @@ abstract class AppStrings {
   static const String logout = 'Log Out';
   static const String settings = 'Settings';
   static const String err = 'Something went wrong';
+  static const String pickImage = "Pick Profile Photo";
 }

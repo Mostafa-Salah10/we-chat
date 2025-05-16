@@ -1,6 +1,7 @@
 import 'package:chat_app/core/utils/app_colors.dart';
 import 'package:chat_app/core/utils/size_config.dart';
 import 'package:chat_app/core/widgets/cached_network_image_widget.dart';
+import 'package:chat_app/features/profile/presentation/widgets/custom_choose_image.dart';
 import 'package:flutter/material.dart';
 
 class CustomProfileImage extends StatelessWidget {
@@ -11,7 +12,7 @@ class CustomProfileImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       clipBehavior: Clip.none,
-      children: [_getProfileImage(), _getEditIcon()],
+      children: [_getProfileImage(), _getEditIcon(context)],
     );
   }
 
@@ -27,12 +28,17 @@ class CustomProfileImage extends StatelessWidget {
     );
   }
 
-  Positioned _getEditIcon() {
+  Positioned _getEditIcon(context) {
     return Positioned(
       bottom: -15,
       right: -15,
       child: MaterialButton(
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (context) => CustomChooseImgeWidget(),
+          );
+        },
         color: AppColors.green,
         shape: CircleBorder(),
         child: const Icon(Icons.edit, color: AppColors.white, size: 20),
