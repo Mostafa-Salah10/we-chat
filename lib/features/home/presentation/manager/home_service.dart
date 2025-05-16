@@ -30,13 +30,16 @@ class HomeService with ChangeNotifier {
 
   void search(String query) {
     filterList.clear();
+
     filterList =
-        users
-            .where(
-              (element) =>
-                  element.name.toLowerCase().contains(query.toLowerCase()),
-            )
-            .toList();
+        query.isEmpty
+            ? []
+            : users
+                .where(
+                  (element) =>
+                      element.name.toLowerCase().contains(query.toLowerCase()),
+                )
+                .toList();
     notifyListeners();
   }
 }

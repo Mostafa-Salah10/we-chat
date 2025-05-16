@@ -14,24 +14,13 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final homeSevice = context.read<HomeService>();
+    return _getAppBar(homeSevice, context);
+  }
+
+  AppBar _getAppBar(HomeService homeSevice, BuildContext context) {
     return AppBar(
       leading: const Icon(CupertinoIcons.home),
-      actions: [
-        homeSevice.isSearch
-            ? IconButton(
-              onPressed: () {
-                homeSevice.update(false);
-              },
-              icon: const Icon(CupertinoIcons.clear_circled_solid),
-            )
-            : IconButton(
-              onPressed: () {
-                homeSevice.update(true);
-              },
-              icon: const Icon(Icons.search),
-            ),
-        _getPubupMenu(),
-      ],
+      actions: _getAppBarActions(homeSevice),
       title:
           homeSevice.isSearch
               ? TextField(
@@ -51,6 +40,25 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
     );
+  }
+
+  List<Widget> _getAppBarActions(HomeService homeSevice) {
+    return [
+      homeSevice.isSearch
+          ? IconButton(
+            onPressed: () {
+              homeSevice.update(false);
+            },
+            icon: const Icon(CupertinoIcons.clear_circled_solid),
+          )
+          : IconButton(
+            onPressed: () {
+              homeSevice.update(true);
+            },
+            icon: const Icon(Icons.search),
+          ),
+      _getPubupMenu(),
+    ];
   }
 
   PopupMenuButton<dynamic> _getPubupMenu() {
