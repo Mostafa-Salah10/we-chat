@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:chat_app/core/utils/app_colors.dart';
 import 'package:chat_app/core/widgets/cached_network_image_widget.dart';
 import 'package:chat_app/features/home/data/models/user_model.dart';
+import 'package:chat_app/features/home/presentation/manager/home_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CustomUserItem extends StatelessWidget {
   const CustomUserItem({super.key, required this.userModel});
@@ -11,11 +15,12 @@ class CustomUserItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final File? chachedImage = context.read<HomeService>().userImageFile;
     return Card(
       color: AppColors.white,
       child: ListTile(
         onTap: () {},
-        leading: _getLeading(),
+        leading: _getLeading(chachedImage),
         title: Text(
           maxLines: 1,
           userModel.name,
@@ -27,18 +32,28 @@ class CustomUserItem extends StatelessWidget {
     );
   }
 
-  ClipRRect _getLeading() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(50),
-      child: CustomCachedNetworkImage(
-        imageUrl: userModel.image,
-        errWidget: CircleAvatar(
-          radius: 29,
-          backgroundColor: AppColors.green,
-          child: const Icon(CupertinoIcons.person, color: AppColors.white),
-        ),
-      ),
-    );
+  ClipRRect _getLeading(File? chachedImage) {
+    return chachedImage != null
+        ? ClipRRect(
+          borderRadius: BorderRadius.circular(50),
+          child: Image.file(
+            chachedImage,
+            fit: BoxFit.fill,
+            width: 60,
+            height: 60,
+          ),
+        )
+        : ClipRRect(
+          borderRadius: BorderRadius.circular(50),
+          child: CustomCachedNetworkImage(
+            imageUrl: userModel.image,
+            errWidget: CircleAvatar(
+              radius: 29,
+              backgroundColor: AppColors.green,
+              child: const Icon(CupertinoIcons.person, color: AppColors.white),
+            ),
+          ),
+        );
   }
 
   Text _getText(BuildContext context, String text) {

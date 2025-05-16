@@ -67,6 +67,13 @@ class HomeView extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           itemCount: homeSevice.isSearch ? filterList.length : users.length,
           itemBuilder: (context, index) {
+            homeSevice.userImageFile = null;
+            homeSevice.loadImageFromCache(
+              userId:
+                  homeSevice.isSearch
+                      ? filterList.elementAt(index).id
+                      : users.elementAt(index).id,
+            );
             return CustomUserItem(
               userModel:
                   homeSevice.isSearch
