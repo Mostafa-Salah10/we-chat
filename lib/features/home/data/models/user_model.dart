@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:chat_app/core/constants/firebase_cons.dart'
     show FireBaseConstants;
 
@@ -11,6 +13,7 @@ class UserModel {
   final String lastActive;
   final String pushToken;
   final String email;
+  File? fileImage;
 
   UserModel({
     required this.image,
@@ -22,6 +25,7 @@ class UserModel {
     required this.lastActive,
     required this.pushToken,
     required this.email,
+    this.fileImage,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {

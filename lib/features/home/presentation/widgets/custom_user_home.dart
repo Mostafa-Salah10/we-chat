@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:chat_app/core/functions/custom_navigator.dart';
+import 'package:chat_app/core/routes/app_routes.dart';
 import 'package:chat_app/core/utils/app_colors.dart';
 import 'package:chat_app/core/widgets/cached_network_image_widget.dart';
 import 'package:chat_app/features/home/data/models/user_model.dart';
@@ -19,7 +21,10 @@ class CustomUserItem extends StatelessWidget {
     return Card(
       color: AppColors.white,
       child: ListTile(
-        onTap: () {},
+        onTap: () {
+          userModel.fileImage = chachedImage;
+          customPush(context, route: AppRoutes.chatScreen, argument: userModel);
+        },
         leading: _getLeading(chachedImage),
         title: Text(
           maxLines: 1,

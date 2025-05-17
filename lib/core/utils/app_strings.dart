@@ -17,4 +17,5 @@ abstract class AppStrings {
   static const String settings = 'Settings';
   static const String err = 'Something went wrong';
   static const String pickImage = "Pick Profile Photo";
+  static const String lastSeen = "Last Seen At ";
 }

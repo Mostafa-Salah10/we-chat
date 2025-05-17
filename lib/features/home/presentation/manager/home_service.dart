@@ -51,6 +51,8 @@ class HomeService with ChangeNotifier {
     final path = SharedPreferencesHelper.get(key: userId);
     if (path != null) {
       userImageFile = File(path);
+    } else {
+      userImageFile = null;
     }
   }
 }
