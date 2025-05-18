@@ -9,4 +9,12 @@ abstract class FireBaseConstants {
   static const String pushToken = 'push_token';
   static const String email = 'email';
   static const String users = 'users';
+  static const String senderId = 'senderId';
+  static const String toldId = 'toldId';
+  static const String message = 'message';
+  static const String messages = 'messages';
+  static const String chats = 'chats';
+  static const String sent = 'sent';
+  static const String read = 'read';
+  static const String type = 'type';
 }

@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:chat_app/core/utils/app_colors.dart';
 import 'package:chat_app/core/utils/app_strings.dart';
-import 'package:chat_app/core/utils/size_config.dart';
 import 'package:chat_app/core/widgets/cached_network_image_widget.dart';
 import 'package:chat_app/features/home/data/models/user_model.dart';
+import 'package:chat_app/features/home/presentation/widgets/custom_chat_body_widget.dart';
 import 'package:chat_app/features/home/presentation/widgets/custom_footer_chat_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +21,10 @@ class ChatView extends StatelessWidget {
       ),
 
       body: Column(
-        children: [Expanded(child: SizedBox()), CustomFooterChatScreen()],
+        children: [
+          Expanded(child: CustomChatBodyWidget(toldId: userModel.id)),
+          CustomFooterChatScreen(toldId: userModel.id),
+        ],
       ),
     );
   }

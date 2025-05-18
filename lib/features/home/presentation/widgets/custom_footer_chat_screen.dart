@@ -1,10 +1,14 @@
 import 'package:chat_app/core/utils/app_colors.dart';
 import 'package:chat_app/core/utils/app_strings.dart';
 import 'package:chat_app/core/utils/size_config.dart';
+import 'package:chat_app/features/home/presentation/manager/home_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class CustomFooterChatScreen extends StatelessWidget {
-  const CustomFooterChatScreen({super.key});
+  const CustomFooterChatScreen({super.key, required this.toldId});
+  final String toldId;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +24,7 @@ class CustomFooterChatScreen extends StatelessWidget {
               child: Row(
                 children: [
                   _getIcon(Icons.emoji_emotions, () {}),
-                  Expanded(child: _getTextField()),
+                  Expanded(child: _getTextField(context)),
                   _getIcon(Icons.image, () {}),
                   _getIcon(Icons.camera_alt_rounded, () {}),
                 ],
@@ -28,18 +32,25 @@ class CustomFooterChatScreen extends StatelessWidget {
             ),
           ),
 
-          _getSendButton(),
+          _getSendButton(context),
         ],
       ),
     );
   }
 
-  MaterialButton _getSendButton() {
+  MaterialButton _getSendButton(BuildContext context) {
+    final home = context.read<HomeService>();
     return MaterialButton(
       minWidth: 50,
       height: 50,
       padding: const EdgeInsets.only(left: 5),
-      onPressed: () {},
+      onPressed: () async {
+        String msg = home.messageController.text;
+        home.messageController.clear();
+        msg.isEmpty
+            ? null
+            : await home.sendMessage(message: msg, toldId: toldId);
+      },
       shape: CircleBorder(),
       color: AppColors.green,
       child: const Icon(Icons.send, color: AppColors.white, size: 30),
@@ -49,22 +60,23 @@ class CustomFooterChatScreen extends StatelessWidget {
   IconButton _getIcon(IconData icon, void Function()? onPressed) {
     return IconButton(
       onPressed: onPressed,
-      icon: Icon(icon, color: AppColors.blueAccent),
+      icon: Icon(icon, color: AppColors.ligthGreen),
     );
   }
 
-  TextField _getTextField() {
+  TextField _getTextField(BuildContext context) {
     return TextField(
+      controller: context.read<HomeService>().messageController,
       keyboardType: TextInputType.multiline,
       maxLines: null,
-      cursorColor: AppColors.blueAccent,
+      cursorColor: AppColors.black,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(vertical: 15),
         border: InputBorder.none,
         focusedBorder: InputBorder.none,
         enabledBorder: InputBorder.none,
         hintText: AppStrings.typeSomething,
-        hintStyle: const TextStyle(color: AppColors.blueAccent),
+        hintStyle: TextStyle(color: AppColors.black),
       ),
     );
   }

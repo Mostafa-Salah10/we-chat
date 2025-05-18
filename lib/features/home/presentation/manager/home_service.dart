@@ -13,6 +13,7 @@ class HomeService with ChangeNotifier {
   List<UserModel> filterList = [];
   bool isSearch = false;
   File? userImageFile;
+  final TextEditingController messageController = TextEditingController();
 
   HomeService({required this.homeRepo});
 
@@ -27,11 +28,13 @@ class HomeService with ChangeNotifier {
     user = await homeRepo.getCurrentUser();
   }
 
+  //update search flag
   void update(bool value) {
     isSearch = value;
     notifyListeners();
   }
 
+  // Search in  users chats
   void search(String query) {
     filterList.clear();
 
@@ -47,6 +50,7 @@ class HomeService with ChangeNotifier {
     notifyListeners();
   }
 
+  //load profile picture from db
   void loadImageFromCache({required String userId}) {
     final path = SharedPreferencesHelper.get(key: userId);
     if (path != null) {
@@ -54,5 +58,18 @@ class HomeService with ChangeNotifier {
     } else {
       userImageFile = null;
     }
+  }
+
+  ///send message to another user
+  Future<void> sendMessage({
+    required String toldId,
+    required String message,
+  }) async {
+    await homeRepo.sendMessage(toldId: toldId, message: message);
+  }
+
+  ///get All Messages
+  Stream<QuerySnapshot> getAllMessages({required String toldId}) {
+    return homeRepo.getAllMessages(toldId: toldId);
   }
 }

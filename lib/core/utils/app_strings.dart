@@ -18,5 +18,6 @@ abstract class AppStrings {
   static const String err = 'Something went wrong';
   static const String pickImage = "Pick Profile Photo";
   static const String lastSeen = "Last Seen At ";
-  static const String typeSomething = "Type Something";
+  static const String typeSomething = "Type Something...";
+  static const String sayHi = "Say Hi ✋";
 }

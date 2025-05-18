@@ -13,8 +13,10 @@ abstract class AppColors {
   static const Color drawerColor = Color(0xff1A2530);
   static const Color red = Colors.red;
   static const Color green = Colors.green;
+  static const Color ligthGreen = Colors.lightGreen;
   static const Color white = Colors.white;
   static const Color blueAccent = Colors.blueAccent;
   static Color deepBrown = const Color(0xff6B4B3E);
+  static Color senderColor = const Color(0xffDCF8C6);
   static Color blackShade54 = Colors.black54;
 }
