@@ -26,13 +26,16 @@ class CustomChatBodyWidget extends StatelessWidget {
             );
           case ConnectionState.active:
           case ConnectionState.done:
-            return _handelSMsgs(snapshot);
+            return _handelSMsgs(snapshot, context);
         }
       },
     );
   }
 
-  Widget _handelSMsgs(AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
+  Widget _handelSMsgs(
+    AsyncSnapshot<QuerySnapshot<Object?>> snapshot,
+    BuildContext context,
+  ) {
     final queryDoc = snapshot.data!.docs;
     if (queryDoc.isEmpty) {
       return Center(
@@ -50,9 +53,16 @@ class CustomChatBodyWidget extends StatelessWidget {
       return ListView.builder(
         padding: EdgeInsets.symmetric(vertical: SizeConfig.blockHeight * 2),
         itemCount: messages.length,
-        itemBuilder:
-            (context, index) =>
-                CardChatWidget(toldId: toldId, message: messages[index]),
+        itemBuilder: (context, index) {
+          final home = context.read<HomeService>();
+          messages[index].read.isEmpty && messages[index].senderId == toldId
+              ? home.updateReadMsg(
+                toldId: toldId,
+                sendTime: messages[index].sent,
+              )
+              : null;
+          return CardChatWidget(toldId: toldId, message: messages[index]);
+        },
       );
     }
   }

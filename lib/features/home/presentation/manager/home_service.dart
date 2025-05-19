@@ -72,4 +72,12 @@ class HomeService with ChangeNotifier {
   Stream<QuerySnapshot> getAllMessages({required String toldId}) {
     return homeRepo.getAllMessages(toldId: toldId);
   }
+
+  ///update read msg
+  Future<void> updateReadMsg({
+    required String toldId,
+    required String sendTime,
+  }) async {
+    await homeRepo.updateReadMsg(toldId: toldId, sendTime: sendTime);
+  }
 }

@@ -52,7 +52,7 @@ class AuthRepo {
 
   static UserModel get _user {
     final User u = _auth.currentUser!;
-    final time = DateTime.now().microsecondsSinceEpoch.toString();
+    final time = DateTime.now().millisecondsSinceEpoch.toString();
     return UserModel(
       email: u.email.toString(),
       name: u.displayName.toString(),

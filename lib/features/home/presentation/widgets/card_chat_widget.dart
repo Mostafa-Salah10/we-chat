@@ -1,3 +1,4 @@
+import 'package:chat_app/core/functions/handel_date.dart';
 import 'package:chat_app/core/utils/app_colors.dart';
 import 'package:chat_app/features/home/data/models/message_model.dart';
 import 'package:flutter/material.dart';
@@ -19,33 +20,45 @@ class CardChatWidget extends StatelessWidget {
       alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
         padding: const EdgeInsets.all(12),
-        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
         decoration: isMe ? _getLocalBoxDecration() : _getRemoteBoxDecration(),
-        child: _getMsgText(isMe, message),
+        child: _getMsgText(isMe, message, context),
       ),
     );
   }
 
-  Row _getMsgText(bool isMe, MessageModel message) {
+  Row _getMsgText(bool isMe, MessageModel message, BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          message.message,
-          style: TextStyle(
-            color: AppColors.black,
-            fontSize: 17,
-            fontWeight: FontWeight.w400,
+        Flexible(
+          child: Text(
+            message.message,
+            style: TextStyle(
+              color: AppColors.black,
+              fontSize: 17,
+              fontWeight: FontWeight.w400,
+            ),
+            overflow: TextOverflow.visible,
           ),
         ),
         const SizedBox(width: 14),
         Text(
-          "12:00 PM",
+          handleDate(context, message.sent),
           style: TextStyle(color: AppColors.black, fontSize: 13),
         ),
         const SizedBox(width: 14),
         isMe
-            ? const Icon(Icons.done_all_outlined, color: AppColors.blueAccent)
+            ? message.read.isNotEmpty
+                ? const Icon(
+                  Icons.done_all_outlined,
+                  color: AppColors.blueAccent,
+                )
+                : const Icon(
+                  Icons.done_all_outlined,
+                  color: AppColors.lightGrey,
+                )
             : SizedBox(),
       ],
     );

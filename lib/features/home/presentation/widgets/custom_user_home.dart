@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:chat_app/core/functions/custom_navigator.dart';
+import 'package:chat_app/core/functions/handel_date.dart';
 import 'package:chat_app/core/routes/app_routes.dart';
 import 'package:chat_app/core/utils/app_colors.dart';
 import 'package:chat_app/core/widgets/cached_network_image_widget.dart';
@@ -32,7 +33,7 @@ class CustomUserItem extends StatelessWidget {
           style: Theme.of(context).textTheme.bodyMedium,
         ),
         subtitle: _getText(context, userModel.about),
-        trailing: _getText(context, "12:00 PM"),
+        trailing: _getText(context,handleDate(context, userModel.lastActive)),
       ),
     );
   }

@@ -54,7 +54,8 @@ class HomeRepo {
         .collection(
           '${FireBaseConstants.chats}/${getChatId(userId: _auth.currentUser!.uid, toldId: toldId)}/${FireBaseConstants.messages}',
         )
-        .add(messageModel.toJson());
+        .doc(messageModel.sent)
+        .set(messageModel.toJson());
   }
 
   // get send message
@@ -68,4 +69,25 @@ class HomeRepo {
       type: TypeChat.text,
     );
   }
+
+  ///update read msg
+  Future<void> updateReadMsg({
+    required String toldId,
+    required String sendTime,
+  }) async {
+    await _fireStore
+        .collection(
+          '${FireBaseConstants.chats}/${getChatId(userId: _auth.currentUser!.uid, toldId: toldId)}/${FireBaseConstants.messages}',
+        )
+        .doc(sendTime)
+        .update({
+          FireBaseConstants.read:
+              DateTime.now().millisecondsSinceEpoch.toString(),
+        });
+  }
+
+
+///get last msg
+
+
 }
