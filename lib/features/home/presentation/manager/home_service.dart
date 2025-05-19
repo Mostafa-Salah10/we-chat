@@ -80,4 +80,9 @@ class HomeService with ChangeNotifier {
   }) async {
     await homeRepo.updateReadMsg(toldId: toldId, sendTime: sendTime);
   }
+
+  ///get last msg in each chat
+  Stream<QuerySnapshot> getLastMsg({required String toldId}) {
+    return homeRepo.getLastMsg(toldId: toldId);
+  }
 }

@@ -86,8 +86,14 @@ class HomeRepo {
         });
   }
 
-
-///get last msg
-
-
+  ///get last msg in each chat
+  Stream<QuerySnapshot> getLastMsg({required String toldId}) {
+    return _fireStore
+        .collection(
+          '${FireBaseConstants.chats}/${getChatId(userId: _auth.currentUser!.uid, toldId: toldId)}/${FireBaseConstants.messages}',
+        )
+        .orderBy(FireBaseConstants.sent, descending: true)
+        .limit(1)
+        .snapshots();
+  }
 }

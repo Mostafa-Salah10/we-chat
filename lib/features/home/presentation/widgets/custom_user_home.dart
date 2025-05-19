@@ -1,12 +1,9 @@
 import 'dart:io';
-
-import 'package:chat_app/core/functions/custom_navigator.dart';
-import 'package:chat_app/core/functions/handel_date.dart';
-import 'package:chat_app/core/routes/app_routes.dart';
-import 'package:chat_app/core/utils/app_colors.dart';
-import 'package:chat_app/core/widgets/cached_network_image_widget.dart';
+import 'package:chat_app/features/home/data/models/message_model.dart';
 import 'package:chat_app/features/home/data/models/user_model.dart';
 import 'package:chat_app/features/home/presentation/manager/home_service.dart';
+import 'package:chat_app/features/home/presentation/widgets/custom_user_card_item.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,55 +15,39 @@ class CustomUserItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final File? chachedImage = context.read<HomeService>().userImageFile;
-    return Card(
-      color: AppColors.white,
-      child: ListTile(
-        onTap: () {
-          userModel.fileImage = chachedImage;
-          customPush(context, route: AppRoutes.chatScreen, argument: userModel);
-        },
-        leading: _getLeading(chachedImage),
-        title: Text(
-          maxLines: 1,
-          userModel.name,
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-        subtitle: _getText(context, userModel.about),
-        trailing: _getText(context,handleDate(context, userModel.lastActive)),
-      ),
+    final home = context.read<HomeService>();
+    final File? chachedImage = home.userImageFile;
+    return StreamBuilder(
+      stream: home.getLastMsg(toldId: userModel.id),
+      builder: (context, snapshot) {
+        return _handleStream(snapshot, context, userModel, chachedImage);
+      },
     );
   }
 
-  ClipRRect _getLeading(File? chachedImage) {
-    return chachedImage != null
-        ? ClipRRect(
-          borderRadius: BorderRadius.circular(50),
-          child: Image.file(
-            chachedImage,
-            fit: BoxFit.fill,
-            width: 60,
-            height: 60,
-          ),
-        )
-        : ClipRRect(
-          borderRadius: BorderRadius.circular(50),
-          child: CustomCachedNetworkImage(
-            imageUrl: userModel.image,
-            errWidget: CircleAvatar(
-              radius: 29,
-              backgroundColor: AppColors.green,
-              child: const Icon(CupertinoIcons.person, color: AppColors.white),
-            ),
-          ),
+  Widget _handleStream(
+    AsyncSnapshot<QuerySnapshot<Object?>> snapshot,
+    BuildContext context,
+    UserModel userModel,
+    File? chachedImage,
+  ) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return const Center(child: SizedBox());
+    } else {
+      final MessageModel? lastMsg;
+      final queryDoc = snapshot.data!.docs;
+      if (queryDoc.isEmpty) {
+        lastMsg = null;
+      } else {
+        lastMsg = MessageModel.fromJson(
+          queryDoc.first.data() as Map<String, dynamic>,
         );
-  }
-
-  Text _getText(BuildContext context, String text) {
-    return Text(
-      maxLines: 1,
-      text,
-      style: Theme.of(context).textTheme.bodySmall,
-    );
+      }
+      return CustomUserCardItem(
+        userModel: userModel,
+        chachedImage: chachedImage,
+        lastMsg: lastMsg,
+      );
+    }
   }
 }
