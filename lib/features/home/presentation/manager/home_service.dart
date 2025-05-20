@@ -92,4 +92,15 @@ class HomeService with ChangeNotifier {
   Stream<QuerySnapshot> getLastMsg({required String toldId}) {
     return homeRepo.getLastMsg(toldId: toldId);
   }
+
+  ///upadte user state
+  Future<void> updateUserState({required bool isOnline}) async {
+    await homeRepo.updateUserState(isOnline: isOnline);
+  }
+
+  ///listen to state of told user
+  Stream<QuerySnapshot> getUserState({required String toldId}) {
+    return homeRepo.getUserState(toldId: toldId);
+  }
+
 }

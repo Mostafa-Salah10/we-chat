@@ -8,8 +8,38 @@ import 'package:chat_app/features/home/presentation/widgets/custom_user_home.dar
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    _listeToTest(true);
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _listeToTest(false);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.detached) {
+      _listeToTest(false);
+    } else if (state == AppLifecycleState.resumed) {
+      _listeToTest(true);
+    }
+    super.didChangeAppLifecycleState(state);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,5 +119,10 @@ class HomeView extends StatelessWidget {
       onPressed: () {},
       child: const Icon(Icons.add_comment_rounded, color: AppColors.white),
     );
+  }
+
+  void _listeToTest(bool val) {
+    final home = context.read<HomeService>();
+    home.updateUserState(isOnline: val);
   }
 }

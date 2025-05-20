@@ -51,6 +51,7 @@ class CustomChatBodyWidget extends StatelessWidget {
               )
               .toList();
       return ListView.builder(
+        // reverse: true,
         physics: BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(vertical: SizeConfig.blockHeight * 2),
         itemCount: messages.length,

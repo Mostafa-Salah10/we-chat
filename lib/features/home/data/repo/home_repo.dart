@@ -97,4 +97,24 @@ class HomeRepo {
         .limit(1)
         .snapshots();
   }
+
+  ///update user state
+  Future<void> updateUserState({required bool isOnline}) async {
+    await _fireStore
+        .collection(FireBaseConstants.users)
+        .doc(_auth.currentUser!.uid)
+        .update({
+          FireBaseConstants.isOnline: isOnline,
+          FireBaseConstants.lastActive:
+              DateTime.now().millisecondsSinceEpoch.toString(),
+        });
+  }
+
+  ///listen to state of told user
+  Stream<QuerySnapshot> getUserState({required String toldId}) {
+    return _fireStore
+        .collection(FireBaseConstants.users)
+        .where(FireBaseConstants.id, isEqualTo: toldId)
+        .snapshots();
+  }
 }

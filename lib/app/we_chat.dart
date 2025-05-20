@@ -14,6 +14,7 @@ class WeChat extends StatelessWidget {
       theme: AppTheme.theme,
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.splashScreen,
+      // home: Test(),
       onGenerateRoute: AppRouter.onGenerateRoute,
     );
   }

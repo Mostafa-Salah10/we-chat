@@ -20,4 +20,5 @@ abstract class AppStrings {
   static const String lastSeen = "Last Seen At ";
   static const String typeSomething = "Type Something...";
   static const String sayHi = "Say Hi ✋";
+  static const String online = "Online";
 }

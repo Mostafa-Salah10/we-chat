@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:chat_app/core/functions/handel_date.dart';
 import 'package:chat_app/core/utils/app_colors.dart';
 import 'package:chat_app/core/utils/app_strings.dart';
 import 'package:chat_app/core/widgets/cached_network_image_widget.dart';
@@ -7,6 +8,7 @@ import 'package:chat_app/features/home/presentation/manager/home_service.dart';
 import 'package:chat_app/features/home/presentation/widgets/custom_chat_body_widget.dart';
 import 'package:chat_app/features/home/presentation/widgets/custom_emoji_widget.dart';
 import 'package:chat_app/features/home/presentation/widgets/custom_footer_chat_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,9 +22,8 @@ class ChatView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leadingWidth: double.infinity,
-        leading: _appBarLeading(context),
+        leading: _getStream(context),
       ),
-
       body: Column(
         children: [
           Expanded(
@@ -42,7 +43,24 @@ class ChatView extends StatelessWidget {
     );
   }
 
-  Row _appBarLeading(BuildContext context) {
+  StreamBuilder<QuerySnapshot<Object?>> _getStream(BuildContext context) {
+    return StreamBuilder(
+      stream: context.read<HomeService>().getUserState(toldId: userModel.id),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return SizedBox();
+        } else {
+          final queryDocs = snapshot.data?.docs.first;
+          final UserModel user = UserModel.fromJson(
+            queryDocs!.data() as Map<String, dynamic>,
+          );
+          return _appBarLeading(context, user);
+        }
+      },
+    );
+  }
+
+  Row _appBarLeading(BuildContext context, UserModel user) {
     return Row(
       children: [
         IconButton(
@@ -51,21 +69,23 @@ class ChatView extends StatelessWidget {
           },
           icon: Icon(Icons.arrow_back),
         ),
-        _getImageProfile(userModel.fileImage),
+        _getImageProfile(userModel.fileImage, user),
         const SizedBox(width: 10),
-        _getTextColumn(context),
+        _getTextColumn(context, user),
       ],
     );
   }
 
-  Column _getTextColumn(BuildContext context) {
+  Column _getTextColumn(BuildContext context, UserModel userModel) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(userModel.name, style: Theme.of(context).textTheme.bodyMedium),
         Text(
-          "${AppStrings.lastSeen}12:00 PM",
+          userModel.isOnline
+              ? AppStrings.online
+              : "${AppStrings.lastSeen} ${handleDate(context, userModel.lastActive)}",
 
           style: Theme.of(context).textTheme.bodySmall,
         ),
@@ -73,7 +93,7 @@ class ChatView extends StatelessWidget {
     );
   }
 
-  ClipRRect _getImageProfile(File? chachedImage) {
+  ClipRRect _getImageProfile(File? chachedImage, UserModel user) {
     return chachedImage != null
         ? ClipRRect(
           borderRadius: BorderRadius.circular(40),
