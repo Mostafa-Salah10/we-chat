@@ -23,7 +23,10 @@ class CustomFooterChatScreen extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  _getIcon(Icons.emoji_emotions, () {}),
+                  _getIcon(Icons.emoji_emotions, () {
+                    context.read<HomeService>().updateEmoji();
+                    FocusScope.of(context).unfocus();
+                  }),
                   Expanded(child: _getTextField(context)),
                   _getIcon(Icons.image, () {}),
                   _getIcon(Icons.camera_alt_rounded, () {}),
@@ -65,8 +68,10 @@ class CustomFooterChatScreen extends StatelessWidget {
   }
 
   TextField _getTextField(BuildContext context) {
+    final home = context.read<HomeService>();
     return TextField(
-      controller: context.read<HomeService>().messageController,
+      onTap: () => home.showEmoji ? home.updateEmoji() : null,
+      controller: home.messageController,
       keyboardType: TextInputType.multiline,
       maxLines: null,
       cursorColor: AppColors.black,

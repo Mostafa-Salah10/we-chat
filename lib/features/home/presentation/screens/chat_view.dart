@@ -3,10 +3,13 @@ import 'package:chat_app/core/utils/app_colors.dart';
 import 'package:chat_app/core/utils/app_strings.dart';
 import 'package:chat_app/core/widgets/cached_network_image_widget.dart';
 import 'package:chat_app/features/home/data/models/user_model.dart';
+import 'package:chat_app/features/home/presentation/manager/home_service.dart';
 import 'package:chat_app/features/home/presentation/widgets/custom_chat_body_widget.dart';
+import 'package:chat_app/features/home/presentation/widgets/custom_emoji_widget.dart';
 import 'package:chat_app/features/home/presentation/widgets/custom_footer_chat_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ChatView extends StatelessWidget {
   const ChatView({super.key, required this.userModel});
@@ -22,8 +25,18 @@ class ChatView extends StatelessWidget {
 
       body: Column(
         children: [
-          Expanded(child: CustomChatBodyWidget(toldId: userModel.id)),
+          Expanded(
+            child: InkWell(
+              onTap: () => FocusScope.of(context).unfocus(),
+              child: CustomChatBodyWidget(toldId: userModel.id),
+            ),
+          ),
           CustomFooterChatScreen(toldId: userModel.id),
+          Consumer<HomeService>(
+            builder:
+                (_, value, _) =>
+                    value.showEmoji ? CustomEmojiWidget() : const SizedBox(),
+          ),
         ],
       ),
     );

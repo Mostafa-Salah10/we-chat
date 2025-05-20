@@ -12,6 +12,7 @@ class HomeService with ChangeNotifier {
   List<UserModel> users = [];
   List<UserModel> filterList = [];
   bool isSearch = false;
+  bool showEmoji = false;
   File? userImageFile;
   final TextEditingController messageController = TextEditingController();
 
@@ -31,6 +32,12 @@ class HomeService with ChangeNotifier {
   //update search flag
   void update(bool value) {
     isSearch = value;
+    notifyListeners();
+  }
+
+  //update emoji flag
+  void updateEmoji() {
+    showEmoji = !showEmoji;
     notifyListeners();
   }
 

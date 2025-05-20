@@ -40,6 +40,7 @@ class HomeRepo {
         .collection(
           '${FireBaseConstants.chats}/${getChatId(userId: _auth.currentUser!.uid, toldId: toldId)}/${FireBaseConstants.messages}',
         )
+        .orderBy(FireBaseConstants.sent)
         .snapshots();
   }
 
