@@ -72,6 +72,7 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             onTap: () {
               GlobalRepo.signOut().then((value) {
                 customPushAndRemoveAll(context, route: AppRoutes.signInScreen);
+                
               });
             },
             child: Center(child: Text(AppStrings.logout)),

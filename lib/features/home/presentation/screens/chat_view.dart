@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'package:chat_app/core/functions/custom_navigator.dart';
 import 'package:chat_app/core/functions/handel_date.dart';
+import 'package:chat_app/core/routes/app_routes.dart';
 import 'package:chat_app/core/utils/app_colors.dart';
 import 'package:chat_app/core/utils/app_strings.dart';
 import 'package:chat_app/core/widgets/cached_network_image_widget.dart';
@@ -22,7 +24,15 @@ class ChatView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leadingWidth: double.infinity,
-        leading: _getStream(context),
+        leading: InkWell(
+          onTap:
+              () => customPush(
+                context,
+                route: AppRoutes.detailsScreen,
+                argument: userModel,
+              ),
+          child: _getStream(context),
+        ),
       ),
       body: Column(
         children: [
@@ -85,7 +95,7 @@ class ChatView extends StatelessWidget {
         Text(
           userModel.isOnline
               ? AppStrings.online
-              : "${AppStrings.lastSeen} ${handleDate(context, userModel.lastActive)}",
+              : "${AppStrings.lastSeen} ${formatChatTimeFromMillisString(userModel.lastActive)}",
 
           style: Theme.of(context).textTheme.bodySmall,
         ),

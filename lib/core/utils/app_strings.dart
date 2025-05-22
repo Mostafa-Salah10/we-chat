@@ -21,4 +21,6 @@ abstract class AppStrings {
   static const String typeSomething = "Type Something...";
   static const String sayHi = "Say Hi ✋";
   static const String online = "Online";
+  static const String isLogin = "isLogin";
+  static const String join = "Joined On";
 }

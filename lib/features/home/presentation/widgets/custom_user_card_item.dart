@@ -7,6 +7,7 @@ import 'package:chat_app/core/utils/app_colors.dart';
 import 'package:chat_app/core/widgets/cached_network_image_widget.dart';
 import 'package:chat_app/features/home/data/models/message_model.dart';
 import 'package:chat_app/features/home/data/models/user_model.dart';
+import 'package:chat_app/features/home/presentation/widgets/custom_image_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +31,16 @@ class CustomUserCardItem extends StatelessWidget {
           userModel.fileImage = chachedImage;
           customPush(context, route: AppRoutes.chatScreen, argument: userModel);
         },
-        leading: _getLeading(chachedImage),
+        leading: InkWell(
+          onTap: () {
+            userModel.fileImage = chachedImage;
+            showDialog(
+              context: context,
+              builder: (context) => CustomImageDialog(user: userModel),
+            );
+          },
+          child: _getLeading(chachedImage),
+        ),
         title: Text(
           maxLines: 1,
           userModel.name,
@@ -107,7 +117,9 @@ class CustomUserCardItem extends StatelessWidget {
       children: [
         Text(
           maxLines: 1,
-          lastMsg == null ? "" : handleDate(context, userModel.lastActive),
+          lastMsg == null
+              ? ""
+              : formatChatTimeFromMillisString(userModel.lastActive),
           style: Theme.of(context).textTheme.bodySmall,
         ),
         lastMsg == null || lastMsg.senderId != userModel.id
