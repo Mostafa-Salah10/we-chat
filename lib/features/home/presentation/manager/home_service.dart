@@ -103,4 +103,21 @@ class HomeService with ChangeNotifier {
     return homeRepo.getUserState(toldId: toldId);
   }
 
+  ///delete msg
+  Future<void> deleteMsg({
+    required String toldId,
+    required String sendTime,
+  }) async {
+    await homeRepo.deleteMsg(toldId: toldId, sendTime: sendTime);
+  }
+
+ //update msg
+  Future<void> updateMsg({
+    required String toldId,
+    required String sendTime,
+    required String message,
+  }) async {
+    await homeRepo.updateMsg(toldId: toldId, sendTime: sendTime, message: message);
+  }
+
 }

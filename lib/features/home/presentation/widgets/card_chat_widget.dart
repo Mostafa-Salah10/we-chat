@@ -1,6 +1,7 @@
 import 'package:chat_app/core/functions/handel_date.dart';
 import 'package:chat_app/core/utils/app_colors.dart';
 import 'package:chat_app/features/home/data/models/message_model.dart';
+import 'package:chat_app/features/home/presentation/widgets/custom_bottom_msg_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
 class CardChatWidget extends StatelessWidget {
@@ -18,11 +19,23 @@ class CardChatWidget extends StatelessWidget {
 
     return Align(
       alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-        decoration: isMe ? _getLocalBoxDecration() : _getRemoteBoxDecration(),
-        child: _getMsgText(isMe, message, context),
+      child: InkWell(
+        onLongPress: () {
+          showModalBottomSheet(
+            context: context,
+            builder:
+                (context) => CustomBottomMsgBottomSheet(
+                  messageModel: message,
+                  isMe: isMe,
+                ),
+          );
+        },
+        child: Container(
+          padding: const EdgeInsets.all(12),
+          margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+          decoration: isMe ? _getLocalBoxDecration() : _getRemoteBoxDecration(),
+          child: _getMsgText(isMe, message, context),
+        ),
       ),
     );
   }

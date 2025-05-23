@@ -23,4 +23,12 @@ abstract class AppStrings {
   static const String online = "Online";
   static const String isLogin = "isLogin";
   static const String join = "Joined On";
+  static const String copy = "Copy Text";
+  static const String edit = "Edit Message";
+  static const String delete = "Delete Message";
+  static const String seenAt = "Sent at: ";
+  static const String readAt = "Read at: ";
+  static const String cancel = "Cancel";
+  static const String update = "Update";
+  static const String notSeen = "Not Seen Yet";
 }

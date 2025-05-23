@@ -2,11 +2,13 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 String handleDate(BuildContext context, String time) {
+  if (time.isEmpty) return '';
   final date = DateTime.fromMillisecondsSinceEpoch(int.parse(time));
   return TimeOfDay.fromDateTime(date).format(context);
 }
 
 String formatChatTimeFromMillisString(String millisString) {
+  if (millisString.isEmpty) return '';
   int millis = int.parse(millisString);
   DateTime time = DateTime.fromMillisecondsSinceEpoch(millis);
 

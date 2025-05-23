@@ -117,4 +117,34 @@ class HomeRepo {
         .where(FireBaseConstants.id, isEqualTo: toldId)
         .snapshots();
   }
+
+  //delete msg
+  Future<void> deleteMsg({
+    required String toldId,
+    required String sendTime,
+  }) async {
+    await _fireStore
+        .collection(
+          '${FireBaseConstants.chats}/${getChatId(userId: _auth.currentUser!.uid, toldId: toldId)}/${FireBaseConstants.messages}',
+        )
+        .doc(sendTime)
+        .delete();
+  }
+
+  //update msg
+  Future<void> updateMsg({
+    required String toldId,
+    required String sendTime,
+    required String message,
+  }) async {
+    if (message.isEmpty) {
+      return;
+    }
+    await _fireStore
+        .collection(
+          '${FireBaseConstants.chats}/${getChatId(userId: _auth.currentUser!.uid, toldId: toldId)}/${FireBaseConstants.messages}',
+        )
+        .doc(sendTime)
+        .update({FireBaseConstants.message: message});
+  }
 }
