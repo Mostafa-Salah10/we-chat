@@ -1,7 +1,7 @@
-
 import 'package:chat_app/core/utils/app_colors.dart';
 import 'package:chat_app/core/utils/app_strings.dart';
 import 'package:chat_app/core/utils/size_config.dart';
+import 'package:chat_app/features/auth/presentation/manager/auth_service.dart';
 import 'package:chat_app/features/home/data/models/user_model.dart';
 import 'package:chat_app/features/home/presentation/manager/home_service.dart';
 import 'package:chat_app/features/home/presentation/widgets/custom_home_app_bar.dart';
@@ -21,6 +21,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   void initState() {
     _listeToTest(true);
     super.initState();
+    AuthService.refreshUserToken(isSignOut: false);
     WidgetsBinding.instance.addObserver(this);
   }
 

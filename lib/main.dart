@@ -10,9 +10,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Future.wait([
-    initServecesApp(),
     Firebase.initializeApp(),
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]),
   ]);
+  initServecesApp();
   runApp(MultiProvider(providers: getProviders, child: WeChat()));
 }

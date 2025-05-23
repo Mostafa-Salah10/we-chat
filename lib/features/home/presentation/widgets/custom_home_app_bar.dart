@@ -3,6 +3,7 @@ import 'package:chat_app/core/repo/global_repo.dart';
 import 'package:chat_app/core/routes/app_routes.dart';
 import 'package:chat_app/core/utils/app_colors.dart';
 import 'package:chat_app/core/utils/app_strings.dart';
+import 'package:chat_app/features/auth/presentation/manager/auth_service.dart';
 import 'package:chat_app/features/home/presentation/manager/home_service.dart';
 import 'package:chat_app/features/profile/presentation/manager/profile_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -69,11 +70,14 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       itemBuilder: (context) {
         return [
           PopupMenuItem(
-            onTap: () {
-              GlobalRepo.signOut().then((value) {
-                customPushAndRemoveAll(context, route: AppRoutes.signInScreen);
-                
-              });
+            onTap: () async {
+              await AuthService.refreshUserToken(isSignOut: true);
+              await context.read<HomeService>().updateUserState(
+                isOnline: false,
+              );
+              await GlobalRepo.signOut();
+
+              customPushAndRemoveAll(context, route: AppRoutes.signInScreen);
             },
             child: Center(child: Text(AppStrings.logout)),
           ),

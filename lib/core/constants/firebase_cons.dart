@@ -17,4 +17,12 @@ abstract class FireBaseConstants {
   static const String sent = 'sent';
   static const String read = 'read';
   static const String type = 'type';
+  static const String messageKey = 'message';
+  static const String token = 'token';
+  static const String notification = 'notification';
+  static const String title = 'title';
+  static const String body = 'body';
+  static const String data = 'data';
+  static const String fcmUrl =
+      'https://fcm.googleapis.com/v1/projects/we-chat-a0044/messages:send';
 }

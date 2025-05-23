@@ -12,8 +12,9 @@ abstract class GlobalRepo {
   static final GoogleSignIn _googleSignIn = GoogleSignIn();
   static bool checkCurrentUser() => _auth.currentUser != null;
   static Future<void> signOut() async {
-    await _googleSignIn.signOut();
+    
     await _auth.signOut();
+    await _googleSignIn.signOut();
   }
 
   static Future<bool> checkCurrentUserExists() async {

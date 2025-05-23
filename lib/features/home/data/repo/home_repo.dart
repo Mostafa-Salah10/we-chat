@@ -1,5 +1,6 @@
 import 'package:chat_app/core/constants/firebase_cons.dart';
 import 'package:chat_app/core/enums/type_chat.dart';
+import 'package:chat_app/core/notifications/push_notification_service.dart';
 import 'package:chat_app/features/home/data/models/message_model.dart';
 import 'package:chat_app/features/home/data/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class HomeRepo {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
+  late UserModel userModel;
 
   ///get All Data Of Users
   Stream<QuerySnapshot> getAllUsers() {
@@ -24,7 +26,8 @@ class HomeRepo {
             .collection(FireBaseConstants.users)
             .doc(_auth.currentUser!.uid)
             .get();
-    return UserModel.fromJson(user.data()!);
+    userModel = UserModel.fromJson(user.data()!);
+    return userModel;
   }
 
   // get chat id
@@ -56,7 +59,14 @@ class HomeRepo {
           '${FireBaseConstants.chats}/${getChatId(userId: _auth.currentUser!.uid, toldId: toldId)}/${FireBaseConstants.messages}',
         )
         .doc(messageModel.sent)
-        .set(messageModel.toJson());
+        .set(messageModel.toJson())
+        .then((value) {
+          PushNotificationService.sendNotification(
+            title: "New Message From ${userModel.name}",
+            body: message,
+            deviceToken: userModel.pushToken,
+          );
+        });
   }
 
   // get send message

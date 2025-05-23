@@ -102,6 +102,7 @@ class CustomBottomMsgBottomSheet extends StatelessWidget {
           VerticalSpace(height: 2),
           _getOptionTile(
             context,
+            messageModel.read.isEmpty?'':
             AppStrings.readAt + handleDate(context, messageModel.read),
             Icons.visibility,
             color: AppColors.green,

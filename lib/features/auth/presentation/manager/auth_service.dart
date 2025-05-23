@@ -34,4 +34,9 @@ class AuthService with ChangeNotifier {
       },
     );
   }
+
+  //refresh user token
+static  Future<void> refreshUserToken({required bool isSignOut}) async {
+    await AuthRepo.refreshUserToken(isSignOut: isSignOut);
+  }
 }

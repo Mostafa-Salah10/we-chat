@@ -1,5 +1,6 @@
 import 'package:chat_app/core/constants/firebase_cons.dart';
 import 'package:chat_app/core/functions/check_internet.dart';
+import 'package:chat_app/core/notifications/push_notification_service.dart';
 import 'package:chat_app/core/utils/app_strings.dart';
 import 'package:chat_app/features/home/data/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -60,9 +61,19 @@ class AuthRepo {
       isOnline: false,
       about: AppStrings.defAbout,
       image: u.photoURL.toString(),
-      pushToken: '',
+      pushToken: PushNotificationService.deviceToken,
       createdAt: time,
       lastActive: time,
     );
+  }
+
+  //refresh token
+  static Future<void> refreshUserToken({required bool isSignOut}) async {
+    await _fireStore
+        .collection(FireBaseConstants.users)
+        .doc(_auth.currentUser!.uid)
+        .update({
+          FireBaseConstants.pushToken:isSignOut ? '' : PushNotificationService.deviceToken,
+        });
   }
 }
